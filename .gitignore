@@ -1,0 +1,13 @@
+.claude/
+nul
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+dist/
+build/
+*.egg-info/
+*.log
+*.log.*
+*.db
+.beadwatch_key

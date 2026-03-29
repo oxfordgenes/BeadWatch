@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeadWatch — Settings</title>
+  <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="/" class="header-brand">
+      <img src="/static/img/logo.svg" alt="" width="24" height="24">
+      <h1>BeadWatch</h1>
+      <span id="app-version" class="header-version">--</span>
+    </a>
+    <nav class="header-nav">
+      <a href="/" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <a href="/dashboard" data-nav="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Dashboard</a>
+      <a href="/instruments" data-nav="instruments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="6" height="14" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="10" width="6" height="11" rx="1"/></svg>Instruments</a>
+      <a href="/operators" data-nav="operators"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Operators</a>
+      <a href="/settings" data-nav="settings" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+    </nav>
+    <div class="header-status"></div>
+  </header>
+
+  <main class="settings-page">
+
+    <!-- Connection Info -->
+    <details class="panel" open>
+      <summary>Connection Info</summary>
+      <div class="panel-body">
+        <dl id="conn-info" class="conn-grid">
+          <dt>Server</dt><dd id="conn-server">--</dd>
+          <dt>Vendor DB</dt><dd id="conn-vendor-db">--</dd>
+          <dt>Normalized DB</dt><dd id="conn-norm-db">--</dd>
+          <dt>Username</dt><dd id="conn-username">--</dd>
+        </dl>
+        <div style="margin-top: 0.75rem;">
+          <a href="/setup" class="btn-ghost" style="text-decoration: none;">Reconfigure</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Polling Interval -->
+    <details class="panel" open>
+      <summary>Polling Interval</summary>
+      <div class="panel-body">
+        <div class="poll-status-row">
+          <span id="poll-status-dot" class="status-dot"></span>
+          <span id="poll-status-text" class="poll-status-text">Checking&hellip;</span>
+        </div>
+        <div class="form-row">
+          <input type="number" id="poll-interval" class="form-input" min="5" max="1440" value="60" style="width: 6rem;">
+          <span style="font-size: 0.75rem; color: var(--slate-500);">min</span>
+          <button id="poll-save" class="btn-ghost" style="margin-left: auto;">Save</button>
+        </div>
+        <small class="section-hint" style="margin-top: 0.375rem;">How often BeadWatch checks for new results (5 &ndash; 1440 min)</small>
+        <div id="poll-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+    <!-- Alert Thresholds -->
+    <details class="panel" open>
+      <summary>Alert Thresholds</summary>
+      <div class="panel-body">
+        <small class="section-hint">Configure warning and critical limits for QC metrics. Leave blank for no limit in that direction.</small>
+        <div id="threshold-list" class="threshold-table-wrap" style="margin-bottom: 0.5rem;"></div>
+        <div id="threshold-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+    <!-- QC Sample Patterns -->
+    <details class="panel" open>
+      <summary>QC Sample Patterns</summary>
+      <div class="panel-body">
+        <small class="section-hint">Define sample names that identify QC controls (e.g. &ldquo;MP1&rdquo; positive, &ldquo;LSNC&rdquo; negative)</small>
+        <div id="qc-def-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <input id="qc-def-pattern" type="text" placeholder="Pattern" maxlength="50" class="form-input" style="flex: 1; min-width: 80px;">
+          <select id="qc-def-role" class="form-select">
+            <option value="positive">Positive</option>
+            <option value="negative">Negative</option>
+          </select>
+          <button id="qc-def-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Sample Name Discovery -->
+    <details class="panel" open>
+      <summary>Sample Name Discovery</summary>
+      <div class="panel-body">
+        <small class="section-hint">Shows distinct SampleIDName / PatientID values for the selected catalog group + lot. Use this to find patterns to configure above.</small>
+        <div class="form-row" style="margin-bottom: 0.5rem; flex-wrap: wrap;">
+          <select id="discover-group" class="form-select" style="min-width: 120px;">
+            <option value="">Catalog Group</option>
+          </select>
+          <select id="discover-lot" class="form-select" style="min-width: 120px;">
+            <option value="">Bead Lot</option>
+          </select>
+          <button id="discover-btn" class="btn-ghost">Load Sample Names</button>
+        </div>
+        <div id="discover-list" style="max-height: 200px; overflow-y: auto;"></div>
+      </div>
+    </details>
+
+    <!-- Tracked Beads -->
+    <details class="panel" open>
+      <summary>Tracked Beads</summary>
+      <div class="panel-body">
+        <small class="section-hint">Track specific bead MFI on the QC Samples chart (per catalog group + lot)</small>
+        <div id="qc-bead-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <select id="bead-group" class="form-select" style="min-width: 120px;">
+            <option value="">Catalog Group</option>
+          </select>
+          <select id="bead-lot" class="form-select" style="min-width: 120px;">
+            <option value="">Bead Lot</option>
+          </select>
+          <input id="qc-bead-id" type="text" placeholder="Bead ID" maxlength="20" class="form-input" style="width: 5rem;">
+          <input id="qc-bead-label" type="text" placeholder="Label" maxlength="50" class="form-input" style="width: 5rem;">
+          <button id="qc-bead-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Excluded Instruments -->
+    <details class="panel" open>
+      <summary>Excluded Instruments</summary>
+      <div class="panel-body">
+        <small class="section-hint">Hide specific instrument serial numbers from instrument comparison charts (e.g. imported instruments from other facilities).</small>
+        <div id="excluded-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <input id="excl-sn" type="text" placeholder="Serial number" maxlength="50" class="form-input" style="flex: 1; min-width: 100px;">
+          <input id="excl-label" type="text" placeholder="Label (optional)" maxlength="50" class="form-input" style="flex: 1; min-width: 80px;">
+          <button id="excl-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Instrument Nicknames -->
+    <details class="panel" open>
+      <summary>Instrument Nicknames</summary>
+      <div class="panel-body">
+        <small class="section-hint">Assign friendly names to instruments. When set, the nickname is shown instead of the serial number on charts.</small>
+        <div id="alias-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <input id="alias-sn" type="text" placeholder="Serial number" maxlength="50" class="form-input" style="flex: 1; min-width: 100px;">
+          <input id="alias-name" type="text" placeholder="Display name" maxlength="50" class="form-input" style="flex: 1; min-width: 80px;">
+          <button id="alias-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Excluded Operators -->
+    <details class="panel" open>
+      <summary>Excluded Operators</summary>
+      <div class="panel-body">
+        <small class="section-hint">Hide specific operator usernames from operator comparison charts.</small>
+        <div id="excl-op-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <input id="excl-op-username" type="text" placeholder="Username" maxlength="100" class="form-input" style="flex: 1; min-width: 100px;">
+          <input id="excl-op-label" type="text" placeholder="Label (optional)" maxlength="50" class="form-input" style="flex: 1; min-width: 80px;">
+          <button id="excl-op-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Operator Nicknames -->
+    <details class="panel" open>
+      <summary>Operator Nicknames</summary>
+      <div class="panel-body">
+        <small class="section-hint">Assign friendly names to operators. When set, the nickname is shown instead of the username on charts.</small>
+        <div id="op-alias-list" style="margin-bottom: 0.5rem;"></div>
+        <div class="form-row" style="flex-wrap: wrap;">
+          <input id="op-alias-username" type="text" placeholder="Username" maxlength="100" class="form-input" style="flex: 1; min-width: 100px;">
+          <input id="op-alias-name" type="text" placeholder="Display name" maxlength="50" class="form-input" style="flex: 1; min-width: 80px;">
+          <button id="op-alias-add" class="btn-ghost">Add</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Catalog Group Visibility & Order -->
+    <details class="panel" open>
+      <summary>Catalog Groups</summary>
+      <div class="panel-body">
+        <small class="section-hint">Toggle visibility and drag to reorder catalog groups shown on the Dashboard.</small>
+        <div id="cg-pref-list" style="margin-bottom: 0.5rem;"></div>
+        <div id="cg-pref-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+    <!-- Bead Lot Visibility & Order -->
+    <details class="panel" open>
+      <summary>Bead Lots</summary>
+      <div class="panel-body">
+        <small class="section-hint">Toggle visibility and reorder bead lots per catalog group on the Dashboard.</small>
+        <div class="form-row" style="margin-bottom: 0.5rem;">
+          <select id="lot-pref-group" class="form-select" style="min-width: 120px;">
+            <option value="">Select catalog group</option>
+          </select>
+        </div>
+        <div id="lot-pref-list" style="margin-bottom: 0.5rem;"></div>
+        <div id="lot-pref-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+    <!-- Cache Management -->
+    <details class="panel" open>
+      <summary>Cache Management</summary>
+      <div class="panel-body">
+        <div class="form-row" style="gap: 0.75rem;">
+          <button id="cache-qc-refresh" class="btn-ghost">Refresh QC Cache</button>
+          <button id="cache-inst-refresh" class="btn-ghost">Refresh Instrument Cache</button>
+          <button id="cache-op-refresh" class="btn-ghost">Refresh Operator Cache</button>
+        </div>
+        <div id="cache-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+    <!-- Settings Backup -->
+    <details class="panel" open>
+      <summary>Settings Backup</summary>
+      <div class="panel-body">
+        <small class="section-hint">Export all settings to a JSON file for backup or transfer to another instance. Credentials are not included.</small>
+        <div class="form-row" style="gap: 0.75rem; margin-top: 0.5rem;">
+          <button id="backup-export" class="btn-ghost">Export Settings</button>
+          <label class="btn-ghost" style="cursor: pointer; margin: 0;">
+            Import Settings
+            <input id="backup-import" type="file" accept=".json" style="display: none;">
+          </label>
+        </div>
+        <div id="backup-msg" class="msg-box"></div>
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Mian Chen &middot; <a href="/disclaimer">Disclaimer &amp; License</a></span>
+    <div class="footer-links">
+      <a href="https://github.com/oxfordgenes/BeadWatch" target="_blank" rel="noopener" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.82-.26.82-.58l-.01-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.67-.31-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.33 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.56 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18a4.65 4.65 0 0 1 1.24 3.22c0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .3"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="/static/js/settings-page.js"></script>
+
+</body>
+</html>

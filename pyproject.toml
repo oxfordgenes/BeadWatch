@@ -1,0 +1,22 @@
+[project]
+name = "beadwatch"
+version = "1.0.0.dev0"
+description = "Portable QC dashboard for Luminex bead-based assay systems in H&I laboratories"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "pyodbc>=5.0.0",
+    "cryptography>=41.0.0",
+    "pydantic>=2.5.0",
+    "apscheduler>=3.10.0",
+    "pypdf>=6.9.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "httpx",
+    "pyinstaller",
+]

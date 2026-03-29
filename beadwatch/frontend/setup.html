@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeadWatch — Setup</title>
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-brand">
+            <img src="/static/img/logo.svg" alt="" width="24" height="24">
+            <h1>BeadWatch</h1>
+            <span class="version">Setup</span>
+        </div>
+    </header>
+
+    <main class="setup-container">
+        <div class="card">
+            <h2 class="card-title">Database Configuration</h2>
+            <p class="setup-subtitle">Connect BeadWatch to your Luminex vendor database to get started.</p>
+
+            <form id="setup-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="input-server">SQL Server Address</label>
+                    <input type="text" id="input-server" placeholder="e.g. LABSERVER\SQLEXPRESS" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-database">Vendor Database Name</label>
+                    <input type="text" id="input-database" placeholder="e.g. FusionData" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-username">Username</label>
+                    <input type="text" id="input-username" placeholder="SQL Server login" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-password">Password</label>
+                    <input type="password" id="input-password" placeholder="SQL Server password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-poll-interval">Polling Interval (minutes)</label>
+                    <input type="number" id="input-poll-interval" min="5" max="1440" value="60"
+                           placeholder="5–1440 minutes">
+                    <small style="color: var(--slate-500)">How often BeadWatch checks for new results (5–1440 min)</small>
+                </div>
+
+                <div class="flex-row mt-16">
+                    <button type="button" id="btn-test" class="btn btn-secondary">Test Connection</button>
+                    <button type="button" id="btn-save" class="btn btn-primary" disabled>Save &amp; Initialize</button>
+                </div>
+            </form>
+
+            <div id="message" class="message hidden"></div>
+        </div>
+    </main>
+
+    <script src="/static/js/setup.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeadWatch — Instrument Comparison</title>
+  <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="/" class="header-brand">
+      <img src="/static/img/logo.svg" alt="" width="24" height="24">
+      <h1>BeadWatch</h1>
+      <span id="app-version" class="header-version">--</span>
+    </a>
+    <nav class="header-nav">
+      <a href="/" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a>
+      <a href="/dashboard" data-nav="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Dashboard</a>
+      <a href="/instruments" data-nav="instruments" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="6" height="14" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="10" width="6" height="11" rx="1"/></svg>Instruments</a>
+      <a href="/operators" data-nav="operators"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Operators</a>
+      <a href="/settings" data-nav="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+    </nav>
+    <div class="header-status"></div>
+  </header>
+
+  <main class="dashboard">
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="control-group">
+        <label id="time-window-label">Window</label>
+        <div class="time-window-toggle" role="group" aria-labelledby="time-window-label">
+          <button type="button" data-days="90" aria-pressed="true">3mo</button>
+          <button type="button" data-days="365" aria-pressed="false">1yr</button>
+          <button type="button" data-days="730" aria-pressed="false">2yr</button>
+          <button type="button" data-days="1095" aria-pressed="false">3yr</button>
+          <button type="button" data-days="0" aria-pressed="false">All</button>
+        </div>
+      </div>
+      <button id="inst-refresh-btn" class="btn-ghost">Refresh Data</button>
+      <button id="btn-wide" class="btn-width-toggle" title="Toggle wide view">
+        <svg id="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        <svg id="icon-collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        <span id="wide-label">Wide</span>
+      </button>
+    </div>
+
+    <!-- Median Bead Count by Instrument -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Median Bead Count by Instrument</span>
+        <span id="counts-subtitle" class="panel-subtitle"></span>
+        <button class="btn-export" data-export="counts" title="Export as PNG">PNG</button>
+      </div>
+      <div class="chart-container">
+        <canvas id="counts-chart"></canvas>
+        <div id="counts-placeholder" class="chart-placeholder">Loading instrument data&hellip;</div>
+      </div>
+      <div class="chart-caption">
+        Median bead count per run, with one line per instrument.
+        Declining counts may indicate probe or fluidics issues requiring maintenance.
+      </div>
+    </section>
+
+    <!-- S/N Ratio by Instrument -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">S/N Ratio by Instrument</span>
+        <span id="sn-subtitle" class="panel-subtitle"></span>
+        <button class="btn-export" data-export="sn" title="Export as PNG">PNG</button>
+      </div>
+      <div class="chart-container">
+        <canvas id="sn-chart"></canvas>
+        <div id="sn-placeholder" class="chart-placeholder">Loading instrument data&hellip;</div>
+      </div>
+      <div class="chart-caption">
+        Signal-to-noise ratio (PC&thinsp;/&thinsp;NC) per run, with one line per instrument.
+        Higher values indicate better signal separation. Diverging lines may indicate calibration drift.
+      </div>
+    </section>
+
+    <!-- Background (NC) by Instrument -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Background (NC) by Instrument</span>
+        <span id="nc-subtitle" class="panel-subtitle"></span>
+        <button class="btn-export" data-export="nc" title="Export as PNG">PNG</button>
+      </div>
+      <div class="chart-container">
+        <canvas id="nc-chart"></canvas>
+        <div id="nc-placeholder" class="chart-placeholder">Loading instrument data&hellip;</div>
+      </div>
+      <div class="chart-caption">
+        Negative control (background) MFI per run, with one line per instrument.
+        Rising background may indicate fluidics contamination or optical degradation.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Mian Chen &middot; <a href="/disclaimer">Disclaimer &amp; License</a></span>
+    <div class="footer-links">
+      <a href="https://github.com/oxfordgenes/BeadWatch" target="_blank" rel="noopener" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.82-.26.82-.58l-.01-2.05c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.67-.31-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.33 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.56 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18a4.65 4.65 0 0 1 1.24 3.22c0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .3"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="/static/js/vendor/chart.js"></script>
+  <script src="/static/js/vendor/date-fns.js"></script>
+  <script src="/static/js/vendor/chartjs-adapter-date-fns.js"></script>
+  <script src="/static/js/instruments.js"></script>
+
+</body>
+</html>
