@@ -829,7 +829,8 @@
                         pointRadius: 3,
                         pointHoverRadius: 5,
                         fill: false,
-                        tension: 0.2,
+                        tension: 0,
+                        showLine: false,
                         yAxisID: 'y'
                     },
                     refLineDataset(color.refSolid, 'y', []),               // 1: mean

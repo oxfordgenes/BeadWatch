@@ -1,6 +1,6 @@
 [project]
 name = "beadwatch"
-version = "1.0.0.dev0"
+version = "1.0.1"
 description = "Portable QC dashboard for Luminex bead-based assay systems in H&I laboratories"
 readme = "README.md"
 requires-python = ">=3.10"
